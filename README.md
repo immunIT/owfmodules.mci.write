@@ -1,4 +1,2 @@
-# owfmodules.skeleton
-Module base repository
-
-Please read [CONTRIBUTING.md](https://github.com/immunIT/octowire-framework/blob/master/CONTRIBUTING.md) to follow the contribution process.
+# owfmodules.mci.write
+Write data into Memory Card through MCI interface.
