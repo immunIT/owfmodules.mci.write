@@ -26,12 +26,12 @@ class Write(AModule):
         })
         self.options = {
             "start_address": {"Value": "", "Required": True, "Type": "hex",
-                              "Description": "Address to start reading from.", "Default": 0x00},
+                              "Description": "Address to start writing at.", "Default": 0x00},
             "data_file": {"Value": "", "Required": True, "Type": "file_r",
                           "Description": "The file containing the data to write on the Memory Card.", "Default": ""},
             "keep_existing": {"Value": "", "Required": True, "Type": "bool",
-                              "Description": "Keep existing data if there is not enough data to fulfill a block."
-                                             "Otherwise, it will erase the rest of the block (Write 0x00).",
+                              "Description": "Keep any pre-existing when writing incomplete blocks."
+                                             "If unset, all blocks involved will simply be erased (0x00).",
                               "Default": True}
         }
         self.dependencies.extend([
@@ -65,7 +65,7 @@ class Write(AModule):
             self.logger.handle("The data size exceeds the Memory Cards size", self.logger.ERROR)
 
         # Write data
-        self.logger.handle("Writing file's content into the Memory Card...", self.logger.INFO)
+        self.logger.handle("Writing file's contents into the Memory Card...", self.logger.INFO)
         with open(self.options["data_file"]["Value"], "rb") as f:
             progress_bar = tqdm(initial=0, total=f_size, desc="Writing", unit='B', unit_scale=True, ascii=" #",
                                 bar_format="{desc} : {percentage:3.0f}%[{bar}] {n_fmt}/{total_fmt}B "
